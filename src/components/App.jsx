@@ -1,16 +1,20 @@
 import { Component } from "react";
 import { nanoid } from 'nanoid'
+import PropTypes from "prop-types";
 import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from './ContactList'
 class App extends Component{
+  static propType = {
+    contacts: PropTypes.array.isRequired,
+    filter: PropTypes.string.isRequired,
+    deleteContact: PropTypes.func.isRequired,
+    isContactExists: PropTypes.func.isRequired,
+    hendelSubmit: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
+  }
   state = {
-    contacts: [
-      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-    ],
+    contacts: [],
     filter: '',
   }
   deleteContact = (id) =>{
@@ -35,7 +39,6 @@ class App extends Component{
   }
   render(){
     const {filter, contacts} = this.state;
-    console.log(contacts);
     return (
       <div>
       <h1>Phonebook</h1>

@@ -1,7 +1,14 @@
 import { Component } from 'react'
+import PropTypes from "prop-types";
 import css from './ContactForm.module.css'
 
 class ContactForm extends Component{
+    static propType = {
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+        hendelChange: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+    }
     state = {
         name: '',
         number: '',
@@ -17,13 +24,15 @@ class ContactForm extends Component{
         const {name, number} = this.state;
         return(
             <form  
+                className={css.form}
                 onSubmit={e=>{
                     this.props.onSubmit(e);
                     this.reset();
                 }}>
-            <label>
+            <label className={css.lable}>
             Name
             <input
+                className={css.input}
                 type="text"
                 name="name"
                 onChange={this.hendelChange}
@@ -33,9 +42,10 @@ class ContactForm extends Component{
                 required
             />
             </label>
-            <label>
+            <label className={css.lable}>
             Numder
             <input
+                className={css.input}
                 type="tel"
                 name="number"
                 onChange={this.hendelChange}
@@ -46,7 +56,7 @@ class ContactForm extends Component{
                 required
             />
             </label>
-            <button type="submit">Add contact</button>
+            <button className={css.button} type="submit">Add contact</button>
             </form>
         )
     }
