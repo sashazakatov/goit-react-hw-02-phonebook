@@ -14,11 +14,11 @@ class ContactList extends Component{
     render(){
         const {contacts, filter, onDelete} = this.props;
         return(
-            <ul>
+            <ul className={css.list}>
             {
                 contacts.filter(({name})=>name.includes(filter))
                 .map(({id, name, number}) => 
-                <li className={css.list} key={id}>
+                <li className={css.item} key={id}>
                     <p>{name}: {number}</p>
                     <button type="button" onClick={()=>{onDelete(id)}}>Delete</button>
                 </li>)
@@ -27,4 +27,5 @@ class ContactList extends Component{
         )
     }
 }
+
 export default ContactList;
