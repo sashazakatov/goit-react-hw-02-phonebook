@@ -4,10 +4,11 @@ import css from './Filter.module.css'
 
 class Filter extends Component{
   static propTypes = {
+    filter: PropTypes.string.isRequired,
     onFilter: PropTypes.func.isRequired,
   }
   render(){
-    const {onFilter} = this.props
+    const { filter, onFilter } = this.props
     return(
       <label className={css.lable}>
       Find contact by name
@@ -15,6 +16,7 @@ class Filter extends Component{
         className={css.input} 
         type="text"
         name="filter"
+        value={filter}
         onChange={onFilter}
       />
       </label>

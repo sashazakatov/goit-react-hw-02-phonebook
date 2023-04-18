@@ -1,18 +1,9 @@
 import { Component } from "react";
 import { nanoid } from 'nanoid'
-import PropTypes from "prop-types";
 import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from './ContactList'
 class App extends Component{
-  static propType = {
-    contacts: PropTypes.array.isRequired,
-    filter: PropTypes.string.isRequired,
-    deleteContact: PropTypes.func.isRequired,
-    isContactExists: PropTypes.func.isRequired,
-    hendelSubmit: PropTypes.func.isRequired,
-    setFilter: PropTypes.func.isRequired,
-  }
   state = {
     contacts: [],
     filter: '',
@@ -23,7 +14,7 @@ class App extends Component{
     });
   }
   isContactExists = (value) => {
-    return this.state.contacts.find(({name}) => name === value);
+    return this.state.contacts.find(({name}) => name.toLowerCase() === value.toLowerCase());
   }
   hendelSubmit = (e) =>{
     e.preventDefault();
@@ -35,20 +26,23 @@ class App extends Component{
     this.setState((prevState) => ({contacts: [...prevState.contacts, {id:nanoid(), name: name.value, number: number.value}]}))
   }
   setFilter = (e) =>{
-    this.setState({filter: e.target.value.toLowerCase()})
+    this.setState({filter: e.target.value})
+  }
+  hendelFilter = () => {
+    const {contacts, filter} = this.state;
+    return contacts.filter(({name})=>name.toLowerCase().includes(filter.toLowerCase()))
   }
   render(){
-    const {filter, contacts} = this.state;
+    const filteredArray = this.hendelFilter()
     return (
       <div>
       <h1>Phonebook</h1>
       <ContactForm onSubmit={this.hendelSubmit}/>
       <h1>Contacts</h1>
-      <Filter onFilter={this.setFilter} />
-      <ContactList filter={filter} contacts={contacts} onDelete={this.deleteContact}/>
+      <Filter filter={this.state.filter} onFilter={this.setFilter} />
+      <ContactList filteredArray={filteredArray} onDelete={this.deleteContact}/>
       </div>
     );
   }
 };
-
 export default App

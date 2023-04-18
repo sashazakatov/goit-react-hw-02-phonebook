@@ -4,10 +4,7 @@ import css from './ContactForm.module.css'
 
 class ContactForm extends Component{
     static propType = {
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-        hendelChange: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
+        onSubmit: PropTypes.func.isRequired,
     }
     state = {
         name: '',

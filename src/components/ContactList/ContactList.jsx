@@ -3,21 +3,21 @@ import PropTypes from "prop-types";
 import css from './ContactList.module.css'
 
 class ContactList extends Component{
-    static propTypes = {
-        contacts: PropTypes.array.isRequired,
-        filter: PropTypes.string.isRequired,
-        id: PropTypes.string,
-        name: PropTypes.string,
-        number: PropTypes.string,
-        onDelete: PropTypes.func.isRequired,
-    }
+        static propTypes = {
+            onDelete: PropTypes.func.isRequired,
+            filteredArray: PropTypes.arrayOf(PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string.isRequired,
+                number: PropTypes.string.isRequired,
+            }))
+        }
     render(){
-        const {contacts, filter, onDelete} = this.props;
+        const {onDelete, filteredArray} = this.props;
         return(
             <ul className={css.list}>
             {
-                contacts.filter(({name})=>name.includes(filter))
-                .map(({id, name, number}) => 
+                
+                filteredArray.map(({id, name, number}) => 
                 <li className={css.item} key={id}>
                     <p>{name}: {number}</p>
                     <button type="button" onClick={()=>{onDelete(id)}}>Delete</button>
@@ -27,4 +27,5 @@ class ContactList extends Component{
         )
     }
 }
+
 export default ContactList;
